@@ -6,6 +6,12 @@ module.exports = {
   ],
   theme: {
     colors: {
+      'midnight': '#121063',
+      'metal': '#565584',
+      'tahiti': '#3ab7bf',
+      'silver': '#ecebff',
+      'bubble-gum': '#ff77e9',
+      'bermuda': '#78dcca',
       'regal-blue': '#243c5a',
       'lab-green': '#24cca9',
       'other-green': '#ecfdf5',
