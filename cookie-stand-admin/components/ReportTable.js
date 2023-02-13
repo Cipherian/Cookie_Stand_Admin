@@ -1,46 +1,64 @@
 import { hours } from './data';
 
+export default function ReportTable({ formData }) {
 
-export default function ReportTable({formdata}) {
-
-  const calculate_cookies = (min, max, average) => {
-    let cookies_sold_array = []
-    for (let i = 0; i < hours.length; i++) {
-      let randomCustomers = Math.round(min + Math.random() * (max - min));
-      let cookiesSold = Math.round(randomCustomers * average)
-      cookies_sold_array.push(cookiesSold)
+  const calculateTotalSum = (hourlyTotals) => {
+    let total = 0;
+    for (let i = 0; i < hourlyTotals.length; i++) {
+      total += hourlyTotals[i];
     }
-    console.log(cookies_sold_array)
-  return cookies_sold_array
-  }
+    return total;
+  };
 
-  const calculate_hourly_total = (cookiesArray) => {
-    return cookiesArray.reduce( (x,y) => x+y, 0)
-  }
+  const getTotalSum = () => {
+    let totalSum = [];
+    for (let i = 0; i < hours.length; i++) {
+      let sum = 0;
+      for (let j = 0; j < formData.length; j++) {
+        sum += formData[j].hourly[i];
+      }
+      totalSum.push(sum);
+    }
+    return totalSum;
+  };
 
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Location</th>
-            <th>Hours</th>
-            {hours.map((hour) => (
-              <th key={hour}>{hour}</th>
-            ))}
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{formdata.location}</td>
-            {calculate_cookies(formdata.maximum, formdata.minimum, formdata.average).map((cookies, index) => (
-              <td key={hours[index]}>{cookies}</td>
-            ))}
-            
-          </tr>
-        </tbody>
-      </table>
+      {formData.length === 0
+        ? <h2 className="my-6 text-sm text-center"> No Cookie Stands Available </h2>
+        : <table className="w-2/3 mx-auto mb-12 text-sm text-center">
+          <thead className="mx-auto text-sm text-center">
+            <tr>
+              <th>Location</th>
+              {hours.map((hour, index) => {
+                return (<th key={`hour-${index}`}> {hour} </th>)
+              })}
+              <th>Totals</th>
+            </tr>
+          </thead>
+          <tbody>
+            {formData.map((item, index) => {
+              return (<tr key={`row-${index}`} className="bg-table-cell-darker-green">
+                <td> {item.location} </td>
+                {item.hourly.map((hourlyData, index) => {
+                  return (<td key={`row-${index}-data-${hourlyData}`}>{hourlyData}</td>)
+                })}
+                <td>{item.hourlyTotal}</td>
+              </tr>)
+            })}
+            <tr>
+              <th>Totals</th>
+              {getTotalSum().map((total, index) => {
+                return (
+                  <td key={`total-${index}`}>
+                    {total}
+                  </td>
+                )
+              })}
+            </tr>
+          </tbody>
+        </table>
+      }
     </div>
   );
 }
