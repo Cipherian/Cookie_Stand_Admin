@@ -2,12 +2,18 @@ import { hours } from './data';
 
 export default function ReportTable({ formData }) {
 
-  const calculateTotalSum = (hourlyTotals) => {
-    let total = 0;
-    for (let i = 0; i < hourlyTotals.length; i++) {
-      total += hourlyTotals[i];
+  const calculate_hourly_cookies = (min, max, average) => {
+    let hourly = [];
+    for (let i = 0; i < hours.length; i++) {
+      let randomCustomers = Math.floor(Math.random() * (max - min + 1)) + min;
+      let cookiesSold = Math.round(randomCustomers * average);
+      hourly.push(cookiesSold);
     }
-    return total;
+    return hourly;
+  };
+
+  const calculate_hourlyTotal = (cookiesArray) => {
+    return cookiesArray.reduce((x, y) => x + y, 0);
   };
 
   const getTotalSum = () => {
@@ -20,6 +26,13 @@ export default function ReportTable({ formData }) {
       totalSum.push(sum);
     }
     return totalSum;
+  };
+  const calculateTotalSum = (hourlyTotals) => {
+    let total = 0;
+    for (let i = 0; i < hourlyTotals.length; i++) {
+      total += hourlyTotals[i];
+    }
+    return total;
   };
 
   return (
@@ -38,6 +51,9 @@ export default function ReportTable({ formData }) {
           </thead>
           <tbody>
             {formData.map((item, index) => {
+              item.hourly = calculate_hourly_cookies(item.minimum, item.maximum, item.average);
+              item.hourlyTotal = calculate_hourlyTotal(item.hourly);
+
               return (<tr key={`row-${index}`} className="bg-table-cell-darker-green">
                 <td> {item.location} </td>
                 {item.hourly.map((hourlyData, index) => {
@@ -55,6 +71,7 @@ export default function ReportTable({ formData }) {
                   </td>
                 )
               })}
+              <td>{calculateTotalSum(getTotalSum())}</td>
             </tr>
           </tbody>
         </table>
