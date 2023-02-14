@@ -3,13 +3,13 @@ import { hours } from './data';
 export default function ReportTable({ formData }) {
 
   const calculate_hourly_cookies = (min, max, average) => {
-    let hourly = [];
+    let hourlyArray = [];
     for (let i = 0; i < hours.length; i++) {
       let randomCustomers = Math.floor(Math.random() * (max - min + 1)) + min;
       let cookiesSold = Math.round(randomCustomers * average);
-      hourly.push(cookiesSold);
+      hourlyArray.push(cookiesSold);
     }
-    return hourly;
+    return hourlyArray;
   };
 
   const calculate_hourlyTotal = (cookiesArray) => {
@@ -38,44 +38,45 @@ export default function ReportTable({ formData }) {
   return (
     <div>
       {formData.length === 0
-        ? <h2 className="my-6 text-sm text-center"> No Cookie Stands Available </h2>
-        : <table className="w-2/3 mx-auto mb-12 text-sm text-center">
+        ? <h2 className="my-6d font-bold text-center text-3xl"> No Cookie Stands Available </h2>
+        : <table className="w-2/3 mx-auto mb-12 text-sm text-center border border-gray-400">
           <thead className="mx-auto text-sm text-center">
-            <tr>
-              <th>Location</th>
+            <tr className="bg-table-cell-darker-green">
+              <th className="py-2 px-4 border-2 border-black">Location</th>
               {hours.map((hour, index) => {
-                return (<th key={`hour-${index}`}> {hour} </th>)
+                return (<th key={`hour-${index}`} className="py-2 px-4 border-2 border-black"> {hour} </th>)
               })}
-              <th>Totals</th>
+              <th className="py-2 px-4 border-2 border-black">Totals</th>
             </tr>
           </thead>
           <tbody>
             {formData.map((item, index) => {
               item.hourly = calculate_hourly_cookies(item.minimum, item.maximum, item.average);
               item.hourlyTotal = calculate_hourlyTotal(item.hourly);
-
-              return (<tr key={`row-${index}`} className="bg-table-cell-darker-green">
-                <td> {item.location} </td>
+  
+              return (<tr key={`row-${index}`} className={index % 2 === 0 ? "bg-table-cell-lighter-green" : "bg-table-cell-green"}>
+                <td className="py-2 px-4 border-2 border-black"> {item.location} </td>
                 {item.hourly.map((hourlyData, index) => {
-                  return (<td key={`row-${index}-data-${hourlyData}`}>{hourlyData}</td>)
+                  return (<td key={`row-${index}-data-${hourlyData}`} className="py-2 px-4 border-2 border-black">{hourlyData}</td>)
                 })}
-                <td>{item.hourlyTotal}</td>
+                <td className="py-2 px-4 border-2 border-black">{item.hourlyTotal}</td>
               </tr>)
             })}
-            <tr>
-              <th>Totals</th>
+            <tr className="bg-table-cell-darker-green">
+              <th className="py-2 px-4 border-2 border-black">Totals</th>
               {getTotalSum().map((total, index) => {
                 return (
-                  <td key={`total-${index}`}>
+                  <td key={`total-${index}`} className="py-2 px-4 border-2 border-black">
                     {total}
                   </td>
                 )
               })}
-              <td>{calculateTotalSum(getTotalSum())}</td>
+              <td className="py-2 px-4 border-2 border-black">{calculateTotalSum(getTotalSum())}</td>
             </tr>
           </tbody>
         </table>
       }
     </div>
   );
-}
+  
+    }
