@@ -26,23 +26,6 @@ export default function Home() {
       hourlyTotal: 0,
     };
 
-    const calculate_hourly_cookies = (min, max, average) => {
-      let hourly = [];
-      for (let i = 0; i < hours.length; i++) {
-        let randomCustomers = Math.floor(Math.random() * (max - min + 1)) + min;
-        let cookiesSold = Math.round(randomCustomers * average);
-        hourly.push(cookiesSold);
-      }
-      return hourly;
-    };
-
-    const calculate_hourlyTotal = (cookiesArray) => {
-      return cookiesArray.reduce((x, y) => x + y, 0);
-    };
-
-    storeData.hourly = calculate_hourly_cookies(minimum, maximum, average);
-    storeData.hourlyTotal = calculate_hourlyTotal(storeData.hourly);
-
     setFormData([...formData, storeData]);
 
   };
@@ -54,7 +37,7 @@ export default function Home() {
       <Header  />
       <CreateForm formSubmitHandler={handleFormSubmit}/>
       <ReportTable formData={formData}/>
-      <Footer />
+      <Footer formData={formData}/>
     </div>
   )
 }
