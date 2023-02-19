@@ -1,43 +1,26 @@
 import Head from '../components/Head'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import CreateForm from '../components/CreateForm';
-import ReportTable from '../components/ReportTable';
-import { useState } from 'react';
-import { hours } from '../components/data';
+import LoginForm from '../components/LoginForm';
+import { useAuth} from '../contexts/auth';
+import CookieStandAdmin from '@/components/CookieStandAdmin';
 
 export default function Home() {
-  const [formData, setFormData] = useState([]);
+  const { user, login, logout } = useAuth();
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const location = event.target.location.value;
-    const minimum = event.target.minimum.value;
-    const maximum = event.target.maximum.value;
-    const average = event.target.average.value;
-    const key = formData.length ? Math.max(...formData.map(item => item.key)) + 1 : 0;
-    const storeData = {
-      key: key,
-      location: location,
-      minimum: minimum,
-      maximum: maximum,
-      average: average,
-      hourly: [],
-      hourlyTotal: 0,
-    };
-
-    setFormData([...formData, storeData]);
-
-  };
-
+  function loginHandler(newUser) {
+    login(newUser.username, newUser.password)
+  }
 
   return (
     <div className="bg">
       <Head />
-      <Header  />
-      <CreateForm formSubmitHandler={handleFormSubmit}/>
-      <ReportTable formData={formData}/>
-      <Footer formData={formData}/>
+      <Header user={user} onLogout={logout}/>
+      {user
+        ? <CookieStandAdmin/>
+        : <LoginForm onLogin={loginHandler}/>
+      }
+      <Footer/>
     </div>
   )
 }

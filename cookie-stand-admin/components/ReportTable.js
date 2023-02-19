@@ -1,6 +1,8 @@
 import { hours } from './data';
 
-export default function ReportTable({ formData }) {
+export default function ReportTable() {
+
+  const { resources, deleteResource } = useResource()
 
   const calculate_hourly_cookies = (min, max, average) => {
     let hourlyArray = [];
@@ -27,6 +29,7 @@ export default function ReportTable({ formData }) {
     }
     return totalSum;
   };
+
   const calculateTotalSum = (hourlyTotals) => {
     let total = 0;
     for (let i = 0; i < hourlyTotals.length; i++) {
