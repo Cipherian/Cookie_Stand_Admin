@@ -8,7 +8,7 @@ export default function CookieStandAdmin() {
   const { user } = useAuth();
   const { createResource } = useResource();
 
-  function handleSubmit(event) {
+  function formSubmitHandler(event) {
     event.preventDefault();
     const info = {
       location: event.target.location.value,
@@ -23,8 +23,8 @@ export default function CookieStandAdmin() {
 
   return (
     <div>
-      <CreateForm handleSubmit={handleSubmit} />
-      <ReportTable />
+      <CreateForm formSubmitHandler={formSubmitHandler} />
+      <ReportTable formSubmitHandler={formSubmitHandler}/>
     </div>
 
   );
