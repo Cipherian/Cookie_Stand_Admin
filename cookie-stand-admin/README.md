@@ -1,6 +1,6 @@
 # Cookie Stand Admin
 
-- A test project using nextjs, tailwind styling and React
+- A test project using nextjs, tailwind styling, React and a Django backend.
 
 - Author: Daniel Brott
 
