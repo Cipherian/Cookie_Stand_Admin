@@ -3,9 +3,7 @@ import useResource from '../hooks/useResource';
 
 export default function ReportTable() {
 
-  const { resources, deleteResource } = useResource()
-
-  console.log(resources)
+  const { resources = [], deleteResource } = useResource()
 
   const calculate_hourly_cookies = (min, max, average) => {
     let hourlyArray = [];
@@ -48,7 +46,7 @@ export default function ReportTable() {
 
   return (
     <div>
-      {!resources
+      {resources.length == 0
         ? <h2 className="my-6d font-bold text-center text-3xl"> No Cookie Stands Available </h2>
         : <table className="w-2/3 mx-auto mb-12 text-sm text-center border border-gray-400">
           <thead className="mx-auto text-sm text-center">

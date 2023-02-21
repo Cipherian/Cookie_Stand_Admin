@@ -10,7 +10,9 @@ export default function Header({ user, onLogout }) {
             <button className="w-20 h-6 text-sm text-white rounded-md bg-button-green whitespace-nowrap" onClick={onLogout}>Sign Out</button>
             <button className="flex items-center justify-center w-1/3 h-6 my-auto text-xs font-semibold bg-white rounded-sm pointer-events-none"><p className="">Overview</p></button>
           </div>
-          : <div></div>
+          : <div>
+            
+          </div>
           }
       </div>
 
