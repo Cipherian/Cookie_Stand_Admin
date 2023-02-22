@@ -17,3 +17,11 @@ yarn dev
 # or
 pnpm dev
 ```
+
+## Login 
+
+- To test the functionality you can use these two accounts with corresponding passwords
+
+- user: dan, password: dan
+
+- user: admin, password: admin
